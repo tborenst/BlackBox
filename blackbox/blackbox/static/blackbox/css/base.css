@@ -6,6 +6,10 @@
 	text-align: center;
 }
 
+.right {
+	float: right;
+}
+
 .nodec {
 	text-decoration: none;
 }

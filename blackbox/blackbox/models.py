@@ -15,3 +15,7 @@ class Box(models.Model):
 	script = models.FileField(upload_to='documents/%Y/%m/%d')
 	uid = models.CharField(max_length=5)
 	date = models.CharField(max_length=200)
+
+class Like(models.Model):
+	liked = models.ForeignKey(Box, related_name='+')
+	liker = models.ForeignKey(BlackboxUser, related_name='+')

@@ -71,10 +71,16 @@ def view_box(request):
 		context["box"] = box
 		context["script"] = box.script.read()
 		context["documentation"] = box.documentation.read()
-		if box.owner.user == request.user:
-			context["own_box"] = True
-		else:
-			context["own_box"] = False
+		context["already_liked"] = False
+		if(request.user.is_authenticated()):
+			bbUsers = BlackboxUser.objects.filter(user=request.user)
+			if(len(bbUsers) > 0):
+				bbUser = bbUsers[0]
+				context["already_liked"] = (len(Like.objects.all().filter(liker=bbUser, liked=box)) > 0)
+			if box.owner.user == request.user:
+				context["own_box"] = True
+			else:
+				context["own_box"] = False
 		return render(request, 'blackbox/viewbox.html', context)
 	else:
 		context["box"] = None
@@ -92,6 +98,45 @@ def search(request):
 #============#
 # MANAGEMENT #
 #============#
+
+def toggle_like(request):
+	res = {}
+	user = request.user 
+	bbUser = BlackboxUser.objects.filter(user=user)[0]
+	boxes = Box.objects.filter(uid=request.GET.get("uid"))
+	if not request.user.is_authenticated():
+		res["status"] = "false"
+		return HttpResponse(res["status"], content_type="application/json")
+	if(len(boxes) > 0):
+		box = boxes[0]
+		likes = Like.objects.all().filter(liked=box, liker=bbUser)
+		if(len(likes) > 0):
+			# toggle off
+			like = likes[0]
+			like.delete()
+			res["status"] = "true"
+			return HttpResponse(res["status"], content_type="application/json")
+		else:
+			# toggle on
+			like = Like(liked=box, liker=bbUser)
+			like.save()
+			res["status"] = "true"
+			return HttpResponse(res["status"], content_type="application/json")
+	else:
+		# no box found
+		res["status"] = "false"
+		return HttpResponse(res["status"], content_type="application/json")
+
+def get_likes(request):
+	res = {}
+	res["likes"] = "box not found"
+	uid = request.GET.get("uid")
+	boxes = Box.objects.filter(uid=uid)
+	if(len(boxes) > 0):
+		box = boxes[0]
+		likes = Like.objects.all().filter(liked=box)
+		res["likes"] = len(likes)
+	return HttpResponse(res["likes"], content_type="application/json")
 
 @login_required(login_url='/login/')
 def manage(request):
@@ -210,6 +255,8 @@ def add_box(request):
 			return render(request, 'blackbox/addboxsuccess.html', context)
 	else:
 		return render(request, 'blackbox/addbox.html', context)
+
+
 
 #=======================#
 # AUTHENTICATION ROUTES #

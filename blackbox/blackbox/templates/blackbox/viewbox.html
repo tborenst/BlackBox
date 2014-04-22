@@ -12,9 +12,21 @@
 
 {% block content %}
 {% if box %}
-	<h1>Box - {{box.name}} {% if own_box %} <a href="/manage/delete-box?uid={{box.uid}}">[ Delete ]</a><a href="/manage/edit-box?uid={{box.uid}}">[ Edit ]</a> {% endif %}</h1>
+	<div id="box_id" class="hidden">{{box.uid}}</div>
+	<h1>Box - {{box.name}} {% if own_box %} <a href="/manage/delete-box?uid={{box.uid}}">[ Delete ]</a><a href="/manage/edit-box?uid={{box.uid}}">[ Edit ]</a> 
+	{% else %}
+		{% if not already_liked %}
+			<a id="like_button" href="#">
+				<span id="like_act">[ Like ]</span>
+			</a>
+		{% else %}
+			<a id="like_button" href="#">
+				<span id="like_act">[ Unlike ]</span>
+			</a>
+		{% endif %}
+	{% endif %}</h1>
 	<div id="owner">
-		Created by {{box.owner.user}}
+		Created by {{box.owner.user}} <span class="right"><span class="like_num">0</span> Likes</span>
 	</div>
 	<div id="description">
 		<h2>Description</h2>
@@ -46,7 +58,9 @@
 {% endblock %}
 
 {% block endincludes %}
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 	<script src="{% static "blackbox/js/prism.js" %}"></script>
 	<script src="{% static "blackbox/js/showdown.js" %}"></script>
 	<script src="{% static "blackbox/js/viewbox.js" %}"></script>
+	<script src="{% static "blackbox/js/likebox.js" %}"></script>
 {% endblock %}

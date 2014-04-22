@@ -20,4 +20,6 @@ urlpatterns = patterns('',
     (r'^box/$', 'blackbox.views.view_box'),
     (r'^search/$', 'blackbox.views.search'),
     (r'^callbox/(?P<taskUid>\w+)/$', 'blackbox.views.task'),
+    (r'^getlikes/$', 'blackbox.views.get_likes'),
+    (r'^likebox/$', 'blackbox.views.toggle_like'),
 )

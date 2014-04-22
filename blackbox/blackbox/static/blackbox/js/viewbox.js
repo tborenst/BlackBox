@@ -5,6 +5,5 @@
 	var html = converter.makeHtml(docText);
 	docDiv.innerHTML = html;
 	docDiv.className = "";
-	console.log("hey");
 })();
 
