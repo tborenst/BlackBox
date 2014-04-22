@@ -158,7 +158,8 @@ def delete_box(request):
 	boxes = Box.objects.filter(uid=uid)
 	if(len(boxes) > 0):
 		box = boxes[0]
-		box.delete()
+		if(box.owner.user == request.user):
+			box.delete()
 		return manage(request)
 	else:
 		context["box"] = None
@@ -341,5 +342,5 @@ def makeToken():
 
 def makeEmailText(token):
     text = "Dear Blackbox user, please click the following link in order to confirm your email address: \n"
-    text += "http://localhost:8000/confirm-email?token=" + token
+    text += "http://128.237.239.15:8000/confirm-email?token=" + token
     return text
