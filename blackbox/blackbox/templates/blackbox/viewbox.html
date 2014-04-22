@@ -1,0 +1,52 @@
+{% extends "blackbox/base.html" %}
+
+{% load staticfiles %}
+{% block includes %}
+	<link rel="stylesheet" type="text/css" href="{% static "blackbox/css/viewbox.css" %}">
+	<link rel="stylesheet" type="text/css" href="{% static "blackbox/css/prism.css" %}">
+{% endblock %}
+
+{% block title %}
+- {% if box %} {{box.name}} {% else %} Not Found {% endif %}
+{% endblock %}
+
+{% block content %}
+{% if box %}
+	<h1>Box - {{box.name}} {% if own_box %} <a href="/manage/delete-box?uid={{box.uid}}">[ Delete ]</a><a href="/manage/edit-box?uid={{box.uid}}">[ Edit ]</a> {% endif %}</h1>
+	<div id="owner">
+		Created by {{box.owner.user}}
+	</div>
+	<div id="description">
+		<h2>Description</h2>
+		<p>{{box.description}}</p>
+	</div>
+	<div id="uid">
+		<h2>Usage</h2>
+		<p>This box's unique id is <span class="bold">{{box.uid}}</span>. In 
+			order to call this Box, send an HTTP GET request to:</p>
+<div id="code">
+<pre class="language-nolang">
+<code>http://www.blackbox.com/callbox/{{box.uid}}/
+</code></pre>
+</div>	
+
+	</div>
+	<div id="code">
+		<h2>Code</h2>
+		<pre class="language-javascript"><code>{{script}}</code></pre>
+	</div>
+	<div id="documentation">
+		<h2>Documentation</h2>
+		<div id="showdown" class="hidden">{{documentation}}</div>
+	</div>
+{% else %}
+	<h1>Box Not Found</h1>
+	<p class="center">Unfortunately, we couldn't find the Box you are looking for.</p>
+{% endif %}
+{% endblock %}
+
+{% block endincludes %}
+	<script src="{% static "blackbox/js/prism.js" %}"></script>
+	<script src="{% static "blackbox/js/showdown.js" %}"></script>
+	<script src="{% static "blackbox/js/viewbox.js" %}"></script>
+{% endblock %}

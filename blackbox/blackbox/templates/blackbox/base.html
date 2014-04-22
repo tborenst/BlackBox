@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+	{% load staticfiles %}
+	<meta charset="UTF-8">
+	<title>Blackbox {% block title %}{% endblock %}</title>
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" type="text/css" href="{% static "blackbox/css/reset.css" %}">
+	<link rel="stylesheet" type="text/css" href="{% static "blackbox/css/base.css" %}">
+	{% block includes %}{% endblock %} <!-- templates can add their own dependencies here -->
+</head>
+<body>
+	<div id="topbar">
+		<div id="container">
+			{% block topbar %}
+				<a href="/home"><div id="logo"></div></a>
+				<div id="search">
+					<form action="/search" method="GET">
+						<input type="text" name="search" placeholder="Search Blackbox"><button type="submit" id="search_go">Go</button>
+					</form>
+				</div>
+				<div id="left_buttons">
+					<a href="/help" class="button">Help</a>
+				</div>
+				<div id="right_buttons">
+					{% if loggedin %}
+						<a href="/manage" class="button">Manage</a>
+						<a href="/logout" class="button">Sign out</a>
+					{% else %}
+						<a id="sign_in" href="/login" class="button">Sign in</a>
+					{% endif %}
+				</div>
+			{% endblock %}
+		</div>
+	</div>
+
+	{% block other %}
+	{% endblock %}
+
+	<div id="content">
+		{% block content %}
+		{% endblock %}
+	</div>
+	{% block endincludes %}
+	{% endblock %}
+</body>
+</html>

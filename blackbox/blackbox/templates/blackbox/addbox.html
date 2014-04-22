@@ -1,0 +1,70 @@
+{% extends "blackbox/base.html" %}
+
+{% load staticfiles %}
+{% block includes %}
+	<link rel="stylesheet" type="text/css" href="{% static "blackbox/css/addbox.css" %}">
+	<script src="{% static "blackbox/js/addbox.js" %}"></script>
+{% endblock %}
+
+{% block title %}
+- {% if edit and not box %} Not Found {% elif edit %} Edit Box {% else %} Create Box {% endif %}
+{% endblock %}
+
+{% block content %}
+{% if edit and not box %}
+	<h1>Box Not Found</h1>
+	<p class="center">Unfortunately, we couldn't find the Box you are looking for.</p>
+{% else %}
+	<h1>{% if edit %} Edit Box ({{box.name}}) {% else %} Create a Box {% endif %}</h1>
+	<div class="errors">
+			{% for error in errors %}
+				<li>{{error}}</li>
+			{% endfor %}
+		</div>
+		<form enctype="multipart/form-data" name="AddBoxForm" action="/manage/add-box" method="post">
+			{% csrf_token %}
+			<div>
+				<label for="boxname">Box Name</label>
+				<div>
+					<input type="text" id="boxname" name="boxname" value="{{box.name}}">
+				</div>
+			</div>
+			<div>
+				<label for="description">Description</label>
+				<div>
+					<textarea type="text" id="description" name="description">{{box.description}}</textarea>
+				</div>
+			</div>
+			<div>
+				<label for="script">Script</label>
+				<div>
+					<div id="script_container">
+						<div id="file_chosen_decoy">No file chosen</div>
+						<input type="file" id="script" name="script_file"></input>
+						<div id="script_decoy" class="button">Choose File</div>
+					</div>
+				</div>
+			</div>
+
+			<div>
+				<label for="documentation">Documentation</label>
+				<div>
+					<div id="documentation_container">
+						<div id="file_chosen_decoy_2">No file chosen</div>
+						<input type="file" id="documentation" name="doc_file"></input>
+						<div id="documentation_decoy" class="button">Choose File</div>
+					</div>
+				</div>
+			</div>
+			{% if edit %}
+				<input type="hidden" name="edit">
+				<input type="hidden" name="uid" value="{{box.uid}}">
+			{% endif %}
+			<div>
+				<div>
+					<button id="create_box" type="submit">{% if edit %} Edit {% else %} Create {% endif %} Box</button>
+				</div>
+			</div>
+		</form>
+{% endif %}
+{% endblock %}

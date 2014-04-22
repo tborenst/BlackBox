@@ -1,0 +1,14 @@
+{% extends "blackbox/base.html" %}
+
+{% load staticfiles %}
+{% block includes %}
+{% endblock %}
+
+{% block title %}
+- Box Created
+{% endblock %}
+
+{% block content %}
+	<h1>Box Created</h1>
+	<p>Your Box has been successfuly created! You may <a href="/box?uid={{boxid}}">view it</a> or go back to the <a href="/manage">Box management</a> section.</p>
+{% endblock %}

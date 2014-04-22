@@ -1,0 +1,75 @@
+#empty_message {
+	text-align: center;
+	margin-top: 4em;
+}
+
+h1 #add_box_button {
+	-webkit-transition: background 0.1s ease-in-out;
+	font-size: 2em;
+	float: right;
+	text-align: center;
+	width: 1.3em;
+	height: 1.3em;
+	line-height: 1.3em;
+	margin: -0.4em -0.4em 0 0;
+	border-radius: 0 5px 0 0;
+	box-sizing: border-box;
+	border-bottom: 2px solid #7777AA;
+	background: #8888AA;
+	cursor: pointer;
+	color: #FFFFFF;
+	text-decoration: none;
+}
+
+h1 #add_box_button:hover {
+	-webkit-transition: background 0.1s ease-in-out;
+	background: #AAAACC;
+	border-bottom: 2px solid #9999CC;
+}
+
+h1 #add_box_button:active {
+	background: #777799;
+	border-bottom: 2px solid #666699;
+}
+
+.box {
+	-webkit-transition: background 0.1s ease-in-out;
+	background: #F6F6F6;
+	height: 6em;
+	padding: 0.5em;
+	margin-bottom: 1em;
+	border-bottom: 2px solid #EEEEEE;
+	cursor: pointer;
+}
+
+.box:hover {
+	-webkit-transition: background 0.1s ease-in-out;
+	background: #E5E5E5;
+	border-bottom: 2px solid #dedede;
+}
+
+.linkbox:last-child .box{
+	margin-bottom: -0.5em;
+}
+
+.box h2 {
+	font-weight: bold;
+	border-bottom: 1px solid #DDDDDD;
+	margin-bottom: 0.4em;
+	padding-bottom: 0.2em;
+	color: #555577;
+}
+
+.box .owner {
+	position: relative;
+	font-size: 0.8em;
+	font-weight: normal;
+	margin-right: 3em;
+	top: -0.15em;
+}
+
+.box p {
+	margin-top: 0.7em;
+	height: 4em;
+	overflow: scroll;
+}

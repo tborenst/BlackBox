@@ -1,0 +1,62 @@
+#script_container, #documentation_container {
+	position: relative;
+}
+
+#script_container #script_decoy, #documentation_container #documentation_decoy {
+	position: absolute;
+	top: 0.55em;
+	left: 0em;
+	padding: 0.7em;
+	cursor: pointer;
+}
+
+#script_container #script, #documentation_container #documentation {
+	position: relative;
+	opacity: 0;
+	width: 6.5em;
+	height: 1.8em;
+	left: -0.1em;
+	z-index: 2;
+}
+
+#script_container #script:hover + #script_decoy, #documentation_container #documentation:hover + #documentation_decoy {
+	background: #EEEEFF;
+}
+
+#script_container #file_chosen_decoy, #documentation_container #file_chosen_decoy_2 {
+	position: absolute;
+	left: 7.7em;
+	top: 1.2em;
+}
+
+#script_help {
+	position: relative;
+	box-sizing: border-box;
+	width: 1.3em;
+	height: 1.3em;
+	top: -1.1em;
+	left: 3.5em;
+	padding-left: 0.1em;
+	background: #EEEEFF;
+	text-align: center;
+	line-height: 1.3em;
+	border: 1px solid #DDDDEE;
+	border-radius: 2em;
+	margin-bottom: -1.2em;
+}
+
+#script_help a {
+	text-decoration: none;
+	color: #555577;
+	font-weight: bold;
+	width: 1.3em;
+	height: 1.3em;
+}
+
+#create_box {
+	position: relative;
+	width: 8em;
+	height: 3em;
+	left: calc(50% - 4em);
+	margin-top: 2em;
+}

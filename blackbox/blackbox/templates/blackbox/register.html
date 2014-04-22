@@ -1,0 +1,45 @@
+{% extends "blackbox/base.html" %}
+
+{% block title %}
+- sign up
+{% endblock %}
+
+{% block content %}
+	<div id="register">
+		<h1>Sign up</h1>
+		<div class="errors">
+			{% for error in errors %}
+				<li>{{error}}</li>
+			{% endfor %}
+		</div>
+		<form name="RegisterForm" action="/register/" method="post">
+			{% csrf_token %}
+			{% if next %}
+				<input type="hidden" name="next" value="{{ next }}" />
+			{% endif %}
+			<div>
+				<label for="username">Username</label>
+				<div>
+					<input type="text" id="username" name="username">
+				</div>
+			</div>
+			<div>
+				<label for="password">Password</label>
+				<div>
+					<input type="password" name="password" id="password">
+				</div>
+			</div>
+			<div>
+				<label for="email">Email</label>
+				<div>
+					<input type="text" name="email" id="email">
+				</div>
+			</div>
+			<div>
+				<div>
+					<button type="submit" class="btn">Sign up</button> or <a href="/login/">Sign in</a>
+				</div>
+			</div>
+		</form>
+	</div>
+{% endblock %}

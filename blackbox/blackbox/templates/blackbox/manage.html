@@ -1,0 +1,28 @@
+{% extends "blackbox/base.html" %}
+
+{% load staticfiles %}
+{% block includes %}
+	<link rel="stylesheet" type="text/css" href="{% static "blackbox/css/manage.css" %}">
+{% endblock %}
+
+{% block title %}
+- Manage
+{% endblock %}
+
+{% block content %}
+	<h1>Manage your boxes <a href="/manage/add-box" id="add_box_button">+</a></h1>
+	{% if boxes|length == 0 %}
+		<p id="empty_message">
+			You do not seem to have any Boxes yet. Try <a href="/manage/add-box">creating a Box</a>.
+		</p>
+	{% else %}
+		{% for box in boxes %}
+			<a class="nodec linkbox" href="/box?uid={{box.uid}}">
+				<div class="box">
+					<h2>{{box.name|upper}} <span class="owner">by {{box.owner.user}} on {{box.date}}</span></h2>
+					<p>{{box.description}}</p>
+				</div>
+			</a>
+		{% endfor %}
+	{% endif %}
+{% endblock %}

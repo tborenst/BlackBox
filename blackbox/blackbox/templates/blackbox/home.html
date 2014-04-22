@@ -1,0 +1,36 @@
+{% extends "blackbox/base.html" %}
+
+{% load staticfiles %}
+{% block includes %}
+	<link rel="stylesheet" type="text/css" href="{% static "blackbox/css/manage.css" %}">
+	<link rel="stylesheet" type="text/css" href="{% static "blackbox/css/home.css" %}">
+{% endblock %}
+
+{% block title %}
+- Home
+{% endblock %}
+
+{% block other %}
+	<div id="home">
+		<h1>BLACKBOX</h1>
+		<h3>bite-sized APIs for quick consumption</h3>
+	</div>
+{% endblock %}
+
+{% block content %}
+	<h1>Latest Boxes</h1>
+	{% if boxes|length == 0 %}
+		<p id="empty_message">
+			There don't seem to be any boxes yet. Why not <a href="/manage/add-box">create a Box</a> yourself?
+		</p>
+	{% else %}
+		{% for box in boxes %}
+			<a class="nodec linkbox" href="/box?uid={{box.uid}}">
+				<div class="box">
+					<h2>{{box.name|upper}} <span class="owner">by {{box.owner.user}} on {{box.date}}</span></h2>
+					<p>{{box.description}}</p>
+				</div>
+			</a>
+		{% endfor %}
+	{% endif %}
+{% endblock %}

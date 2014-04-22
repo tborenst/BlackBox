@@ -1,0 +1,117 @@
+{% extends "blackbox/base.html" %}
+
+{% load staticfiles %}
+{% block includes %}
+	<link rel="stylesheet" type="text/css" href="{% static "blackbox/css/prism.css" %}">
+	<link rel="stylesheet" type="text/css" href="{% static "blackbox/css/viewbox.css" %}">
+{% endblock %}
+
+{% block title %}
+- Help
+{% endblock %}
+
+{% block content %}
+	<h1>Help</h1>
+	<h2>What is Blackbox?</h2>
+	<p>Blackbox is a platform that lets developers create bite-sized APIs for
+		easy consumption through HTTP GET requests. Each API, or Box, is 
+		completely self contained.</p>
+	<p>You do not need a Blackbox account in order to consume Boxes. In order to
+		consume a Box, simply browse Blackbox or search for a specific Box by 
+		name. Once found, view the Box's documentation to learn how to use it.
+	</p>
+	<br>
+	<h2>Creating Boxes</h2>
+	<p>In order to create your own Box you must register for a Blackbox account.
+		Once logged in, go to the <a href="/manage">Management</a> section in 
+		order to create a new Box.</p>
+	<p>Each Box is composed of four parts: a unique Box name, a brief 
+		description, a javascript file containing the logic of the Box, and a
+		markdown file containing the documentation of the Box. Note that when
+		creating a Box you will need to provide these two pieces as files with
+		.js and .md extensions.</p>
+	<br>
+	<h2>Writing a Blackbox Script</h2>
+	<p>The entire logic of a Box should be written in Javascript as if it were 
+		to be executed as a <span class="bold">body of a Javascript function.
+		</span> Essentally, this means that if the following piece of code was 
+		uploaded to Blackbox:</p>
+
+<div id="code">
+<pre class="language-javascript">
+<code>var a = 4; 
+var b = 6;
+return a+b;
+</code></pre>
+</div>	
+
+	<p>... when a client makes a call to the Box, the code that will actually
+		get executed will look like this:</p>
+
+<div id="code">
+<pre class="language-javascript">
+<code>;(function(){
+	var a = 4; 
+	var b = 6;
+	return a+b;
+})();
+</code></pre>
+</div>	
+
+	<p>Furthemore, at runtime your code will have access to the parameters of
+		the calling GET request in the form of a "global" javascript object
+		called <span class="bold">params</span>. For example, a box launched by
+		this request:</p>
+
+<div id="code">
+<pre class="language-nolang">
+<code>http://www.blackbox.com/callbox/{box-id}?param1=value1&ampparam2=value2
+</code></pre>
+</div>	
+
+	<p>Would be able to access the parameters of the GET request like so:</p>
+
+<div id="code">
+<pre class="language-javascript">
+<code>var a = params["param1"]; // "value1"
+var b = params["param2"]; // "value2"
+</code></pre>
+</div>
+
+	<h2>Consuming Boxes</h2>
+	<p>You do not need a Blackbox account to consume a Box's API. Once you have
+		found a Box you want to consume, go to its documentation page. There you
+		will find that Box's <span class="bold">unique id</span>. Boxes are 
+		called via HTTP GET requests to the following url:</p>
+
+<div id="code">
+<pre class="language-nolang">
+<code>http://www.blackbox.com/callbox/{box-id}?param1=value1&ampparam2=value2
+</code></pre>
+</div>
+
+	<p>Any parameters in the request will be passed into the Box.</p>
+	<br>
+	
+	<h2>Error Handling</h2>
+	<p>Since Blackbox only stores and runs snippets of code, there is no way to
+		guarantee that the code, together with the parameters passed in by the
+		client, will not fail. In order to overcome that Blackbox attempts to
+		make a Box call which, if fails for any reason, returns the following:
+	</p>
+
+<div id="code">
+<pre class="language-nolang">
+<code>{"error": "Could not run Box."}
+</code></pre>
+</div>
+
+	<p>If you are getting this error, you may want to check that the parameters
+		you are using are in compliance with the Box's documentation. Otherwise,
+		you may report a problem to Blackbox by flagging the Box for inspection.
+	</p>
+{% endblock %}
+
+{% block endincludes %}
+	<script src="{% static "blackbox/js/prism.js" %}"></script>
+{% endblock %}
